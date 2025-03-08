@@ -2,7 +2,6 @@
   import { enhance } from '$app/forms';
   
   let { data, form } = $props();
-
 </script>
 
 
@@ -23,13 +22,14 @@
       </button>
   </form>
 
+  <h2 class="text-2xl font-bold mt-8">Players</h2>
   <!-- Table -->
   <div class="w-full max-w-2xl mt-8">
       <table class="w-full border-collapse border border-gray-700">
           <thead>
               <tr class="bg-gray-800">
                   <th class="p-3 text-left">Account ID</th>
-                  <th class="p-3 text-left">Name</th>
+                  <th class="p-3 text-left">Name</th> 
                   <th class="p-3 text-left">Avatar</th>
                   <th class="p-3 text-left">Profile</th>
               </tr>
@@ -41,6 +41,29 @@
                   <td class="p-3">{player.name}</td>
                   <td class="p-3"><a href={player.avatar_url} target="_blank" rel="noopener noreferrer"><img src={player.avatar_url} alt="Avatar" class="w-8 h-8 rounded-full"></a></td>
                   <td class="p-3"><a href={player.profile_url} target="_blank" rel="noopener noreferrer">Profile</a></td>
+              </tr>
+              {/each}
+          </tbody>
+      </table>
+  </div>
+
+  <h2 class="text-2xl font-bold mt-8">Leaves</h2>
+  <!-- Table -->
+  <div class="w-full max-w-2xl mt-8">
+      <table class="w-full border-collapse border border-gray-700">
+          <thead>
+              <tr class="bg-gray-800">
+                  <th class="p-3 text-left">Player</th>
+                  <th class="p-3 text-left">Match ID</th>
+                  <th class="p-3 text-left">Date</th>
+              </tr>
+          </thead>
+          <tbody>
+              {#each data.leaves as leave}
+              <tr class="border-t border-gray-700 hover:bg-gray-800">
+                  <td class="p-3">{leave.players.name}</td>
+                  <td class="p-3"><a href={`https://www.dotabuff.com/matches/${leave.match_id}`} target="_blank" rel="noopener noreferrer">{leave.match_id}</a></td>
+                  <td class="p-3">{leave.date}</td>
               </tr>
               {/each}
           </tbody>

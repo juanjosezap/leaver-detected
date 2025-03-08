@@ -2,13 +2,27 @@
 import { supabase } from "$lib/supabaseClient";
 
 export async function load() {
-  const { data } = await supabase.from("players").select();
+  const { data: players, error: playersError } = await supabase.from("players").select();
   
-  console.log("ACAA");
-  console.log(data);
-  return {
-    players: data ?? [],
+  if (playersError) {
+    console.error('Error fetching players:', playersError);
+  }
 
+  const { data: leaves, error: leavesError } = await supabase.from("leaves")
+  .select(`
+    *,
+    players:account_id (
+      name
+    )
+  `);
+  
+  if (leavesError) {
+    console.error('Error fetching leaves:', leavesError);
+  }
+  
+  return {
+    players: players ?? [],
+    leaves: leaves ?? []
   };
 }
 
@@ -30,11 +44,11 @@ export const actions = {
     default: async ({ request }: { request: Request }) => {
       // Get form data
       const formData = await request.formData();
-      console.log('Form data:', formData);
+      
       const account_id = parseInt(formData.get('account_id') as string, 10);
       const player_data = await getPlayerData(account_id);
       const { personaname	, avatarfull, profileurl } = player_data;
-      console.log("player_data", player_data);
+      
       // Insert the record
       const { data, error } = await supabase
         .from('players')
