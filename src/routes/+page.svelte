@@ -5,7 +5,7 @@
 </script>
 
 
-<div class="min-h-screen flex flex-col items-center bg-gray-900 text-white p-6">
+<div class="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white p-8 flex flex-col items-center">
   <h1 class="text-3xl font-bold mb-6">Leaver Detected</h1>
   <!-- Form -->
   <form use:enhance method="POST" class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md">
